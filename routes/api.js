@@ -11,15 +11,17 @@ router.get('/blacklist', async (req, res, next) => {
     return res.status(200).json({ success: true, response: stuff, length: stuff.length });
 });
 
+/* POST /upload with auth */
 router.post('/upload', async (req, res, next) => {
     const apiKey = req.headers.authorization;
     if (!apiKey || !apiKey.startsWith('Bearer') || apiKey.replace('Bearer', '').trim() != APIKEY) return res.sendStatus(401);
     const { ID, tagName, evidence = [] } = req.body;
     const check = await get(ID);
-    if (check) return res.status(409);
+    if (check) return res.json({ success: false, duplicate: true });
     if (!ID || !tagName) return res.status(400);
     delete req.body.ID;
     await set(ID, { tagName: tagName, evidence: evidence });
     return res.json({ success: true });
 });
+
 module.exports = router;
