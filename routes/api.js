@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { getArr, set } = require('../database/database');
+const { getArr, set, get } = require('../database/database');
 const { APIKEY } = process.env;
 
 /* GET blaclist */
