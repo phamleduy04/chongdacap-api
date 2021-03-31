@@ -15,6 +15,8 @@ router.post('/upload', async (req, res, next) => {
     const apiKey = req.headers.authorization;
     if (!apiKey || !apiKey.startsWith('Bearer') || apiKey.replace('Bearer', '').trim() != APIKEY) return res.sendStatus(401);
     const { ID, tagName, evidence = [] } = req.body;
+    const check = await get(ID);
+    if (check) return res.status(409);
     if (!ID || !tagName) return res.status(400);
     delete req.body.ID;
     await set(ID, { tagName: tagName, evidence: evidence });
