@@ -12,10 +12,10 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "morgan": "~1.9.1",
-    "quickmongo": "^3.0.2"
+    "quickmongo": "^3.0.2",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
-    "dotenv": "^8.2.0",
     "eslint": "^7.23.0",
     "nodemon": "^2.0.7"
   }
