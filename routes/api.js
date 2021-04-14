@@ -35,7 +35,7 @@ router.get('/getID', async (req, res, next) => {
         return res.status(200).send(fbid);
     }
     catch(e) {
-        return res.status(404).json({ error: e });
+        return res.status(404).send('not found!');
     }
 });
 
