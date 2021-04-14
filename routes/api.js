@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { getArr, set, get } = require('../database/database');
 const { APIKEY } = process.env;
+const getFBID = require('get-fbid');
 
 /* GET blaclist */
 router.get('/blacklist', async (req, res, next) => {
@@ -22,6 +23,20 @@ router.post('/upload', async (req, res, next) => {
     delete req.body.ID;
     await set(ID, { tagName: tagName, evidence: evidence });
     return res.json({ success: true });
+});
+
+
+/* GET /getID from username -> fbid */
+router.get('/getID', async (req, res, next) => {
+    const { username } = req.query;
+    if (!username) return res.status(404).send('Not found!');
+    try {
+        const fbid = await getFBID(username);
+        return res.status(200).send(fbid);
+    }
+    catch(e) {
+        return res.status(404).json({ error: e });
+    }
 });
 
 module.exports = router;
